@@ -5,7 +5,7 @@
  */
 
 // ─── CONFIGURATION ───────────────────────────────────────────────────────────
-const API_BASE = 'http://localhost:8000';  // Changer pour l'URL du serveur en production
+const API_BASE = 'https://edudata-aoe7.onrender.com';  // Changer pour l'URL du serveur en production
 
 // ─── ÉTAT LOCAL ──────────────────────────────────────────────────────────────
 let localData = [];
