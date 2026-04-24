@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduData — Analyse des données scolaires</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="logo-icon">ED</span>
+      <div>
+        <div class="logo-title">EduData</div>
+        <div class="logo-sub">INF 232 · EC2</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#" class="nav-item active" data-page="saisie">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Saisie
+      </a>
+      <a href="#" class="nav-item" data-page="donnees">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Données
+        <span class="nav-badge" id="nav-badge">0</span>
+      </a>
+      <a href="#" class="nav-item" data-page="analyse">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Analyse
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="semester-badge">Mercredi · 7H–10H</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ===== PAGE SAISIE ===== -->
+    <section class="page active" id="page-saisie">
+      <header class="page-header">
+        <div>
+          <h1>Enregistrer un résultat</h1>
+          <p class="page-desc">Saisie individuelle ou import groupé des notes étudiantes</p>
+        </div>
+      </header>
+
+      <div class="toast" id="toast"></div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            Fiche étudiant
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nom complet</label>
+              <input type="text" id="f-nom" placeholder="Dupont Jean-Marie" />
+            </div>
+            <div class="form-group">
+              <label>Matricule</label>
+              <input type="text" id="f-mat" placeholder="22G1234" />
+            </div>
+            <div class="form-group">
+              <label>Filière</label>
+              <select id="f-filiere">
+                <option value="">— Sélectionner —</option>
+                <option>Informatique</option>
+                <option>Mathématiques</option>
+                <option>Physique</option>
+                <option>Biologie</option>
+                <option>Économie</option>
+                <option>Droit</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Niveau</label>
+              <select id="f-niveau">
+                <option value="">— Sélectionner —</option>
+                <option>Licence 1</option>
+                <option>Licence 2</option>
+                <option>Licence 3</option>
+                <option>Master 1</option>
+                <option>Master 2</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Matière</label>
+              <input type="text" id="f-matiere" placeholder="Analyse de données" />
+            </div>
+            <div class="form-group">
+              <label>Note / 20</label>
+              <input type="number" id="f-note" min="0" max="20" step="0.25" placeholder="14.50" />
+            </div>
+            <div class="form-group">
+              <label>Semestre</label>
+              <select id="f-semestre">
+                <option value="">— Sélectionner —</option>
+                <option>Semestre 1</option>
+                <option>Semestre 2</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Année académique</label>
+              <select id="f-annee">
+                <option>2024-2025</option>
+                <option>2025-2026</option>
+                <option>2026-2027</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary" id="btn-enregistrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Enregistrer
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="card-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </span>
+            Import groupé (CSV)
+          </div>
+          <p class="import-hint">Format : <code>Nom;Matricule;Filière;Niveau;Matière;Note;Semestre</code></p>
+          <textarea id="f-bulk" placeholder="Jean Dupont;22G001;Informatique;Licence 2;Analyse;14.5;Semestre 1&#10;Marie Curie;22G002;Mathématiques;Licence 3;Algèbre;17;Semestre 2&#10;Paul Biya;22G003;Physique;Licence 1;Mécanique;11.5;Semestre 1"></textarea>
+          <button class="btn-secondary" id="btn-import">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Importer les données
+          </button>
+
+          <div class="divider"></div>
+
+          <div class="card-head" style="margin-top:0">
+            <span class="card-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+            Export CSV
+          </div>
+          <p class="import-hint">Télécharger toutes les données enregistrées</p>
+          <button class="btn-outline" id="btn-export">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Exporter en CSV
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE DONNÉES ===== -->
+    <section class="page" id="page-donnees">
+      <header class="page-header">
+        <div>
+          <h1>Base de données</h1>
+          <p class="page-desc">Consultation, filtrage et gestion des enregistrements</p>
+        </div>
+        <button class="btn-danger" id="btn-vider">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Vider tout
+        </button>
+      </header>
+
+      <div class="card">
+        <div class="filter-bar">
+          <select id="filter-filiere" class="filter-select">
+            <option value="">Toutes les filières</option>
+          </select>
+          <select id="filter-niveau" class="filter-select">
+            <option value="">Tous les niveaux</option>
+          </select>
+          <select id="filter-sem" class="filter-select">
+            <option value="">Tous les semestres</option>
+            <option>Semestre 1</option>
+            <option>Semestre 2</option>
+          </select>
+          <input type="text" id="filter-search" placeholder="Rechercher un étudiant..." class="search-input" />
+        </div>
+
+        <div class="table-container">
+          <table id="main-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Matricule</th>
+                <th>Filière</th>
+                <th>Niveau</th>
+                <th>Matière</th>
+                <th>Note</th>
+                <th>Mention</th>
+                <th>Semestre</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="empty-donnees">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <p>Aucune donnée enregistrée.</p>
+          <span>Commencez par saisir des résultats dans l'onglet Saisie.</span>
+        </div>
+        <div class="table-footer" id="table-footer"></div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE ANALYSE ===== -->
+    <section class="page" id="page-analyse">
+      <header class="page-header">
+        <div>
+          <h1>Analyse descriptive</h1>
+          <p class="page-desc">Statistiques et visualisations des résultats collectés</p>
+        </div>
+      </header>
+
+      <div class="empty-state card" id="empty-analyse" style="display:none">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <p>Pas encore de données.</p>
+        <span>Ajoutez des résultats pour voir l'analyse.</span>
+      </div>
+
+      <div id="analyse-content">
+        <div class="stats-grid">
+          <div class="stat-card accent">
+            <div class="stat-label">Effectif</div>
+            <div class="stat-value" id="s-n">—</div>
+            <div class="stat-sub">étudiants</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Moyenne</div>
+            <div class="stat-value" id="s-moy">—</div>
+            <div class="stat-sub">sur 20</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Médiane</div>
+            <div class="stat-value" id="s-med">—</div>
+            <div class="stat-sub">sur 20</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Écart-type</div>
+            <div class="stat-value" id="s-std">—</div>
+            <div class="stat-sub">dispersion</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-label">Taux de réussite</div>
+            <div class="stat-value" id="s-reussite">—</div>
+            <div class="stat-sub">≥ 10/20</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Note min</div>
+            <div class="stat-value" id="s-min">—</div>
+            <div class="stat-sub">sur 20</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Note max</div>
+            <div class="stat-value" id="s-max">—</div>
+            <div class="stat-sub">sur 20</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Variance</div>
+            <div class="stat-value" id="s-var">—</div>
+            <div class="stat-sub">σ²</div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card chart-card">
+            <div class="card-head">Distribution des notes</div>
+            <canvas id="chartHist" height="220"></canvas>
+          </div>
+          <div class="card chart-card">
+            <div class="card-head">Répartition par mention</div>
+            <canvas id="chartMention" height="220"></canvas>
+          </div>
+          <div class="card chart-card wide">
+            <div class="card-head">Moyenne par filière</div>
+            <canvas id="chartFiliere" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
